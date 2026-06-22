@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640" style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-dashed" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Background zones -->
+  <rect x="30" y="10" width="740" height="140" rx="8" fill="#f0f9ff" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="50" y="40" font-size="13" fill="#3b82f6" font-weight="600">Client Layer</text>
+
+  <rect x="30" y="160" width="740" height="140" rx="8" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="50" y="190" font-size="13" fill="#7c3aed" font-weight="600">Frontend Layer</text>
+
+  <rect x="30" y="310" width="740" height="160" rx="8" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="50" y="340" font-size="13" fill="#059669" font-weight="600">Backend Layer (FastAPI)</text>
+
+  <rect x="30" y="480" width="740" height="140" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="50" y="510" font-size="13" fill="#d97706" font-weight="600">External &amp; Storage</text>
+
+  <!-- Nodes: Client -->
+  <rect x="340" y="55" width="120" height="40" rx="6" fill="#bfdbfe" stroke="#64748b" stroke-width="1"/>
+  <text x="400" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#172033">🌐 Browser</text>
+
+  <!-- Arrows: Client → Frontend -->
+  <line x1="400" y1="95" x2="400" y2="135" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Nodes: Frontend -->
+  <rect x="90" y="140" width="220" height="100" rx="6" fill="#c7d2fe" stroke="#64748b" stroke-width="1"/>
+  <text x="200" y="168" text-anchor="middle" font-size="13" font-weight="600" fill="#172033">Interview UI</text>
+  <text x="200" y="188" text-anchor="middle" font-size="11" fill="#5b6475">4 种面试官类型 · 语音输入</text>
+  <text x="200" y="206" text-anchor="middle" font-size="11" fill="#5b6475">导师搜索 · 对话界面</text>
+  <text x="200" y="224" text-anchor="middle" font-size="11" fill="#5b6475">历史记录</text>
+
+  <rect x="490" y="140" width="220" height="100" rx="6" fill="#c7d2fe" stroke="#64748b" stroke-width="1"/>
+  <text x="600" y="168" text-anchor="middle" font-size="13" font-weight="600" fill="#172033">Chat UI</text>
+  <text x="600" y="188" text-anchor="middle" font-size="11" fill="#5b6475">多轮对话界面</text>
+  <text x="600" y="206" text-anchor="middle" font-size="11" fill="#5b6475">实时响应</text>
+  <text x="600" y="224" text-anchor="middle" font-size="11" fill="#5b6475">JavaScript / HTML 纯前端</text>
+
+  <!-- Arrows: Frontend → Backend -->
+  <line x1="200" y1="240" x2="200" y2="285" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="600" y1="240" x2="600" y2="285" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Nodes: Backend -->
+  <rect x="90" y="290" width="170" height="60" rx="6" fill="#99f6e4" stroke="#64748b" stroke-width="1"/>
+  <text x="175" y="316" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">main.py</text>
+  <text x="175" y="334" text-anchor="middle" font-size="11" fill="#5b6475">FastAPI 入口 + 路由</text>
+
+  <rect x="280" y="290" width="170" height="60" rx="6" fill="#99f6e4" stroke="#64748b" stroke-width="1"/>
+  <text x="365" y="316" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">interview.py</text>
+  <text x="365" y="334" text-anchor="middle" font-size="11" fill="#5b6475">面试引擎 · 多轮对话</text>
+
+  <rect x="470" y="290" width="170" height="60" rx="6" fill="#99f6e4" stroke="#64748b" stroke-width="1"/>
+  <text x="555" y="316" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">persona.py</text>
+  <text x="555" y="334" text-anchor="middle" font-size="11" fill="#5b6475">导师画像提取搜索引擎</text>
+
+  <rect x="660" y="290" width="90" height="60" rx="6" fill="#99f6e4" stroke="#64748b" stroke-width="1"/>
+  <text x="705" y="316" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">chat.py</text>
+  <text x="705" y="334" text-anchor="middle" font-size="11" fill="#5b6475">对话历史</text>
+
+  <!-- Internal arrows between backend modules -->
+  <line x1="260" y1="320" x2="278" y2="320" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="450" y1="320" x2="468" y2="320" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="640" y1="320" x2="658" y2="320" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- Arrows: Backend → External -->
+  <line x1="175" y1="350" x2="175" y2="380" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="365" y1="350" x2="365" y2="380" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="555" y1="350" x2="555" y2="380" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="705" y1="350" x2="705" y2="380" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Horizontal line to distribute to external services -->
+  <line x1="100" y1="395" x2="700" y2="395" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="100" y1="395" x2="100" y2="420" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="310" y1="395" x2="310" y2="420" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="395" x2="500" y2="420" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="395" x2="700" y2="420" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- External / Storage Nodes -->
+  <rect x="40" y="425" width="120" height="50" rx="6" fill="#fde68a" stroke="#64748b" stroke-width="1"/>
+  <text x="100" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">DeepSeek API</text>
+  <text x="100" y="463" text-anchor="middle" font-size="10" fill="#5b6475">LLM 对话推理</text>
+
+  <rect x="220" y="425" width="180" height="50" rx="6" fill="#fde68a" stroke="#64748b" stroke-width="1"/>
+  <text x="310" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">ArXiv / Google Scholar</text>
+  <text x="310" y="463" text-anchor="middle" font-size="10" fill="#5b6475">论文搜索 &amp; 公开信息</text>
+
+  <rect x="460" y="425" width="80" height="50" rx="6" fill="#fde68a" stroke="#64748b" stroke-width="1"/>
+  <text x="500" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">Baidu STT</text>
+  <text x="500" y="463" text-anchor="middle" font-size="10" fill="#5b6475">语音识别</text>
+
+  <rect x="610" y="425" width="140" height="50" rx="6" fill="#99f6e4" stroke="#64748b" stroke-width="1"/>
+  <text x="680" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#172033">personas.db</text>
+  <text x="680" y="463" text-anchor="middle" font-size="10" fill="#5b6475">SQLite 持久化存储</text>
+
+  <!-- Title -->
+  <text x="400" y="8" text-anchor="middle" font-size="16" font-weight="650" fill="#172033" dy="-5">InterviewMate — System Architecture</text>
+</svg>
