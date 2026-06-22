@@ -5,8 +5,6 @@ pubDate: 'Jun 22 2026'
 heroImage: '../../assets/interviewmate-screenshot.png'
 ---
 
-![InterviewMate 界面截图](/images/interviewmate-screenshot.png)
-
 ## 为什么做这个项目？
 
 考研、保研、留学面试——对很多人来说是既重要又焦虑的环节。
