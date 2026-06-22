@@ -2,8 +2,10 @@
 title: 'InterviewMate — 用 AI 模拟面试，让面试练习不再焦虑'
 description: '一个基于 DeepSeek API 的 AI 模拟面试平台，支持导师画像提取与多类型面试官，专为考研/保研/留学面试设计。'
 pubDate: 'Jun 22 2026'
-heroImage: '../../assets/blog-placeholder-5.jpg'
+heroImage: '../../assets/interviewmate-screenshot.png'
 ---
+
+![InterviewMate 界面截图](/images/interviewmate-screenshot.png)
 
 ## 为什么做这个项目？
 
@@ -12,6 +14,8 @@ heroImage: '../../assets/blog-placeholder-5.jpg'
 真实的面试场景下，你不知道导师会问什么，不知道怎么组织回答，也不知道自己的表现到底怎么样。找同学模拟，双方都尴尬；找老师帮忙，又不好意思频繁打扰。
 
 **InterviewMate 的出发点很简单：让 AI 扮演面试官，帮你低成本、高频次地练习面试。**
+
+> **在线体验：** [https://interviewmate-t1lk.onrender.com](https://interviewmate-t1lk.onrender.com)
 
 ## 核心功能
 
@@ -47,7 +51,7 @@ InterviewMate 采用了简单但务实的技术选型：
 **后端：** FastAPI + DeepSeek API + SQLite  
 **前端：** 纯 HTML/CSS/JavaScript（无框架依赖）  
 **搜索引擎：** ArXiv API + Google Scholar 爬虫  
-**部署：** 一键启动脚本，开箱即用
+**部署：** 一键启动脚本 / Render 云平台
 
 ![InterviewMate 系统架构图](/images/interviewmate-arch.svg)
 
@@ -100,9 +104,10 @@ InterviewMate 采用了简单但务实的技术选型：
 
 ## 如何体验
 
-项目开源在 GitHub：[Aimuyoufaze/InterviewMate](https://github.com/aimuyoufaze/InterviewMate)
+项目已部署在 Render 云平台：
+➡️ **[interviewmate-t1lk.onrender.com](https://interviewmate-t1lk.onrender.com)**
 
-使用方法：
+也可以本地运行：
 
 ```bash
 git clone https://github.com/aimuyoufaze/InterviewMate.git
