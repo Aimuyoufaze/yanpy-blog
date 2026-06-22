@@ -2,48 +2,134 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="intro">
+				<h1>Hi, I'm Yan 👋</h1>
+				<p>
+					Information Management & System 专业在读，喜欢捣鼓 AI、写代码、打篮球和羽毛球。
+				</p>
+				<p>这里会写一些关于技术、学习和日常的东西。</p>
+			</section>
+
+			<hr />
+
+			<section class="recent-posts">
+				<h2>Recent Posts</h2>
+				{
+					posts.length > 0 ? (
+						<ul>
+							{
+								posts.map((post) => (
+									<li>
+										<a href={`/blog/${post.id}/`}>
+											<h3>{post.data.title}</h3>
+											<p class="meta">
+												<FormattedDate date={post.data.pubDate} />
+											</p>
+											{post.data.description && <p class="desc">{post.data.description}</p>}
+										</a>
+									</li>
+								))
+							}
+						</ul>
+					) : (
+						<p class="empty">No posts yet. Coming soon!</p>
+					)
+				}
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+<style>
+	.intro {
+		margin-bottom: 2em;
+	}
+	.intro h1 {
+		margin-bottom: 0.5em;
+		font-size: 2.2em;
+	}
+	.intro p {
+		color: var(--text-secondary);
+		font-size: 1.1em;
+		max-width: 540px;
+	}
+
+	.recent-posts h2 {
+		font-size: 1.4em;
+		margin-bottom: 1em;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5em;
+	}
+
+	ul li a {
+		display: block;
+		padding: 1.25em 1.5em;
+		background: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		transition: background 0.2s ease, border-color 0.2s ease;
+	}
+
+	ul li a:hover {
+		background: var(--bg-hover);
+		border-color: var(--accent);
+	}
+
+	ul li h3 {
+		margin: 0 0 0.3em 0;
+		font-size: 1.15em;
+		color: var(--text-primary);
+	}
+
+	.meta {
+		margin: 0 0 0.4em 0;
+		font-size: 0.85em;
+		color: var(--text-secondary);
+	}
+
+	.desc {
+		margin: 0;
+		font-size: 0.95em;
+		color: var(--text-secondary);
+		line-height: 1.5;
+	}
+
+	.empty {
+		color: var(--text-secondary);
+		font-style: italic;
+	}
+
+	@media (max-width: 720px) {
+		.intro h1 {
+			font-size: 1.8em;
+		}
+		ul li a {
+			padding: 1em;
+		}
+	}
+</style>

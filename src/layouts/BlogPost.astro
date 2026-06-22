@@ -11,72 +11,38 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 	</head>
 
 	<body>
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
+				<div class="title-section">
+					<h1>{title}</h1>
+					<div class="meta">
+						<FormattedDate date={pubDate} />
+						{
+							updatedDate && (
+								<span class="updated">
+									&middot; Updated <FormattedDate date={updatedDate} />
+								</span>
+							)
+						}
 					</div>
+				</div>
+
+				{heroImage && (
+					<div class="hero-image">
+						<Image width={1020} height={510} src={heroImage} alt="" />
+					</div>
+				)}
+
+				<hr />
+
+				<div class="prose">
 					<slot />
 				</div>
 			</article>
@@ -84,3 +50,48 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Footer />
 	</body>
 </html>
+<style>
+	.title-section {
+		text-align: center;
+		margin-bottom: 1.5em;
+	}
+
+	.title-section h1 {
+		font-size: 2.2em;
+		margin-bottom: 0.4em;
+		line-height: 1.2;
+	}
+
+	.meta {
+		font-size: 0.9em;
+		color: var(--text-secondary);
+	}
+
+	.hero-image {
+		margin-bottom: 2em;
+		text-align: center;
+	}
+
+	.hero-image img {
+		display: block;
+		margin: 0 auto;
+		border-radius: var(--radius-md);
+		max-width: 100%;
+	}
+
+	.prose {
+		font-size: 1.05em;
+		line-height: 1.85;
+		color: var(--text-primary);
+	}
+
+	.prose p {
+		margin-bottom: 1.5em;
+	}
+
+	@media (max-width: 720px) {
+		.title-section h1 {
+			font-size: 1.6em;
+		}
+	}
+</style>
