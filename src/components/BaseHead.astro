@@ -20,8 +20,23 @@ const { title, description, image = FallbackImage } = Astro.props;
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/png" sizes="32x32" href="/icon-logo.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/icon-logo.png" id="favicon" />
 <link rel="apple-touch-icon" href="/icon-logo-lg.png" />
+<script is:inline>
+(function(){
+	var link = document.getElementById('favicon');
+	if(!link) return;
+	var img = new Image();
+	img.onload = function(){
+		var c = document.createElement('canvas');
+		c.width = 32; c.height = 32;
+		var ctx = c.getContext('2d');
+		ctx.drawImage(img, 0, 0, 32, 32);
+		link.href = c.toDataURL('image/png');
+	};
+	img.src = '/icon-logo.png';
+})();
+</script>
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
