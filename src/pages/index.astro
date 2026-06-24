@@ -28,13 +28,7 @@ const posts = (await getCollection('blog'))
 						</p>
 						<p>这里会写一些关于技术、学习和日常的东西。</p>
 					</div>
-					<video class="intro-video" src="/intro.mp4" autoplay muted playsinline webkit-playsinline preload="auto" id="introVideo"></video>
-<script is:inline>
-	document.addEventListener('DOMContentLoaded', function(){
-		var v = document.getElementById('introVideo');
-		if(v) v.play().catch(function(){});
-	});
-</script>
+					<video class="intro-video" src="/intro.mp4" autoplay muted playsinline preload="auto"></video>
 				</div>
 			</section>
 
