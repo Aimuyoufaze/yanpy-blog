@@ -22,21 +22,7 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/png" sizes="32x32" href="/icon-logo.png" id="favicon" />
 <link rel="apple-touch-icon" href="/icon-logo-lg.png" />
-<script is:inline>
-(function(){
-	var link = document.getElementById('favicon');
-	if(!link) return;
-	var img = new Image();
-	img.onload = function(){
-		var c = document.createElement('canvas');
-		c.width = 32; c.height = 32;
-		var ctx = c.getContext('2d');
-		ctx.drawImage(img, 0, 0, 32, 32);
-		link.href = c.toDataURL('image/png');
-	};
-	img.src = '/icon-logo.png';
-})();
-</script>
+<script>(function(){var e=document.getElementById('favicon');if(!e)return;var t=new Image;t.onload=function(){var n=document.createElement('canvas');n.width=32;n.height=32;var r=n.getContext('2d');r.drawImage(t,0,0,32,32);e.href=n.toDataURL('image/png')};t.src='/icon-logo.png'})();</script>
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
