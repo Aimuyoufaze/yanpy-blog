@@ -5,7 +5,10 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<a href="/" class="site-title">{SITE_TITLE}</a>
+		<a href="/" class="site-title">
+			<img src="/logo.png" alt="Logo" class="site-logo" />
+			{SITE_TITLE}
+		</a>
 		<div class="nav-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
@@ -28,6 +31,9 @@ import HeaderLink from './HeaderLink.astro';
 		padding: 0.75em 0;
 	}
 	.site-title {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
 		font-weight: 700;
 		font-size: 1.1em;
 		text-decoration: none;
@@ -35,6 +41,11 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	.site-title:hover {
 		color: var(--text-primary);
+	}
+	.site-logo {
+		height: 1.6em;
+		width: auto;
+		border-radius: 4px;
 	}
 	.nav-links {
 		display: flex;
