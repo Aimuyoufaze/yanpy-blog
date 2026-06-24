@@ -20,11 +20,16 @@ const posts = (await getCollection('blog'))
 		<Header />
 		<main>
 			<section class="intro">
-				<h1>Hi, I'm Yan 👋</h1>
-				<p>
-					Information Management & System 专业在读，喜欢捣鼓 AI、写代码、打篮球和羽毛球。
-				</p>
-				<p>这里会写一些关于技术、学习和日常的东西。</p>
+				<div class="intro-content">
+					<div class="intro-text">
+						<h1>Hi, I'm Yan 👋</h1>
+						<p>
+							Information Management & System 专业在读，喜欢捣鼓 AI、写代码、打篮球和羽毛球。
+						</p>
+						<p>这里会写一些关于技术、学习和日常的东西。</p>
+					</div>
+					<video class="intro-video" src="/intro.mp4" autoplay muted loop playsinline></video>
+				</div>
 			</section>
 
 			<hr />
@@ -61,6 +66,11 @@ const posts = (await getCollection('blog'))
 	.intro {
 		margin-bottom: 2em;
 	}
+	.intro-content {
+		display: flex;
+		align-items: center;
+		gap: 2em;
+	}
 	.intro h1 {
 		margin-bottom: 0.5em;
 		font-size: 2.2em;
@@ -69,6 +79,27 @@ const posts = (await getCollection('blog'))
 		color: var(--text-secondary);
 		font-size: 1.1em;
 		max-width: 540px;
+	}
+	.intro-video {
+		width: 140px;
+		height: 140px;
+		border-radius: 50%;
+		object-fit: cover;
+		flex-shrink: 0;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	}
+	@media (max-width: 640px) {
+		.intro-content {
+			flex-direction: column-reverse;
+			text-align: center;
+		}
+		.intro p {
+			max-width: 100%;
+		}
+		.intro-video {
+			width: 120px;
+			height: 120px;
+		}
 	}
 
 	.recent-posts h2 {
