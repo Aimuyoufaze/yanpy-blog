@@ -26,7 +26,7 @@
     <div id="xiaoyou-chat-handle" class="chat-handle" title="拖拽调整大小"></div>
     <div id="xiaoyou-chat-messages" class="chat-messages">
       <div class="message bot first">
-        <span class="msg-avatar">🌬️</span>
+        <span class="msg-avatar"><img src="/grass.png" alt="小右" class="avatar-img" /></span>
         <div class="bubble">你好呀～我是小右，Yan 的数字助手 🌬️</div>
       </div>
     </div>
@@ -68,7 +68,7 @@
       if (!isUser) {
         const avatar = document.createElement('span');
         avatar.className = 'msg-avatar';
-        avatar.textContent = '🌬️';
+        avatar.innerHTML = '<img src="/grass.png" alt="小右" class="avatar-img" />';
         div.appendChild(avatar);
       }
 
@@ -103,7 +103,7 @@
       div.id = 'typing-wrap';
       const avatar = document.createElement('span');
       avatar.className = 'msg-avatar';
-      avatar.textContent = '🌬️';
+      avatar.innerHTML = '<img src="/grass.png" alt="小右" class="avatar-img" />';
       div.appendChild(avatar);
       const wrap = document.createElement('div');
       wrap.className = 'msg-wrap';
@@ -373,11 +373,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #EDE6D6;
-    border: 1.5px solid #3D2E1F;
+    background: transparent;
+    border: none;
     border-radius: 50%;
-    font-size: 13px;
+    overflow: hidden;
     margin-top: 4px;
+  }
+  .avatar-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
   }
 
   .msg-wrap {
