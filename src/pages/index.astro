@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import ChatWidget from '../components/ChatWidget.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -60,6 +61,7 @@ const posts = (await getCollection('blog'))
 			</section>
 		</main>
 		<Footer />
+		<ChatWidget />
 	</body>
 </html>
 <style>
