@@ -31,7 +31,7 @@ client = OpenAI(
 )
 
 # 加载小右人格
-PUBLIC_MD_PATH = os.path.join(os.path.dirname(__file__), "..", "public", "PUBLIC.md")
+PUBLIC_MD_PATH = os.path.join(os.path.dirname(__file__), "PUBLIC.md")
 if os.path.exists(PUBLIC_MD_PATH):
     with open(PUBLIC_MD_PATH, "r", encoding="utf-8") as f:
         xiaoyou_persona = f.read()

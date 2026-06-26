@@ -3,9 +3,9 @@
   <circle cx="300" cy="300" r="150" fill="#FAF6EE"/>
 
   <!-- 月桂花环 - 左枝 -->
-  <g fill="#5A7A30" stroke="#3D2E1F" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity="0.85">
+  <g fill="#7A9A50" stroke="#3D2E1F" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity="0.7">
     <!-- 左枝主干 -->
-    <path d="M300 140 Q220 150, 150 230 Q120 300, 130 380 Q150 470, 220 510" fill="none" stroke="#3D5A20" stroke-width="3.5"/>
+    <path d="M300 140 Q220 150, 150 230 Q120 300, 130 380 Q150 470, 220 510" fill="none" stroke="#5A7A30" stroke-width="3.5"/>
 
     <!-- 左枝叶子 -->
     <path d="M280 152 Q268 140, 262 146 Q268 158, 280 152"/>
@@ -22,9 +22,9 @@
   </g>
 
   <!-- 月桂花环 - 右枝 -->
-  <g fill="#5A7A30" stroke="#3D2E1F" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity="0.85">
+  <g fill="#7A9A50" stroke="#3D2E1F" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity="0.7">
     <!-- 右枝主干 -->
-    <path d="M300 140 Q380 150, 450 230 Q480 300, 470 380 Q450 470, 380 510" fill="none" stroke="#3D5A20" stroke-width="3.5"/>
+    <path d="M300 140 Q380 150, 450 230 Q480 300, 470 380 Q450 470, 380 510" fill="none" stroke="#5A7A30" stroke-width="3.5"/>
 
     <!-- 右枝叶子 -->
     <path d="M320 152 Q332 140, 338 146 Q332 158, 320 152"/>
