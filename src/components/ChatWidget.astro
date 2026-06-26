@@ -10,7 +10,7 @@
   <div id="xiaoyou-chat-panel" class="chat-panel hidden">
     <div class="chat-header">
       <div class="chat-header-info">
-        <span class="chat-header-icon">🌬️</span>
+        <span class="chat-header-icon"><img src="/grass.png" alt="小右" class="header-avatar-img" /></span>
         <div>
           <span class="chat-header-title">小右</span>
           <span class="chat-header-status">在线 · AI 助手</span>
@@ -288,7 +288,14 @@
     align-items: center;
     gap: 10px;
   }
-  .chat-header-icon { font-size: 1.5em; line-height: 1; }
+  .chat-header-icon { display: flex; align-items: center; }
+  .header-avatar-img {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 1px solid #3D2E1F;
+  }
   .chat-header-title {
     display: block;
     font-size: 0.95em;
