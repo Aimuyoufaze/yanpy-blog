@@ -23,6 +23,7 @@
       </button>
     </div>
 
+    <div id="xiaoyou-chat-handle" class="chat-handle" title="拖拽调整大小"></div>
     <div id="xiaoyou-chat-messages" class="chat-messages">
       <div class="message bot first">
         <span class="msg-avatar">🌬️</span>
@@ -182,6 +183,38 @@
         panel.classList.add('hidden');
       }
     });
+
+    // ── 左上角拖拽调整大小 ──
+    const handle = document.getElementById('xiaoyou-chat-handle');
+    let isDragging = false;
+    let startX, startY, startW, startH;
+
+    handle.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startW = panel.offsetWidth;
+      startH = panel.offsetHeight;
+      panel.style.transition = 'none';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = startX - e.clientX;  // 向左拖 = 宽度增加
+      const dy = startY - e.clientY;  // 向上拖 = 高度增加
+      const newW = Math.min(520, Math.max(280, startW + dx));
+      const newH = Math.min(640, Math.max(360, startH + dy));
+      panel.style.width = newW + 'px';
+      panel.style.height = newH + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        panel.style.transition = '';
+      }
+    });
   })();
 </script>
 
@@ -237,7 +270,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    resize: both;
     transition: opacity 0.2s ease;
   }
   .chat-panel.hidden { display: none; }
@@ -285,6 +317,25 @@
   .chat-close:hover { background: rgba(61,46,31,0.06); }
 
   /* ══════ 消息区 ══════ */
+  /* ── 左上角拖拽手柄 ── */
+  .chat-handle {
+    position: absolute;
+    top: 0; left: 0;
+    width: 24px; height: 24px;
+    cursor: nwse-resize;
+    z-index: 10;
+  }
+  .chat-handle::before {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px;
+    width: 8px; height: 8px;
+    border-top: 2px solid #3D2E1F;
+    border-left: 2px solid #3D2E1F;
+    opacity: 0.25;
+  }
+  .chat-handle:hover::before { opacity: 0.5; }
+
   .chat-messages {
     flex: 1;
     overflow-y: auto;
@@ -446,7 +497,6 @@
       background: #2A2722;
       border-color: #6A6050;
       box-shadow: 6px 6px 0 rgba(0,0,0,0.3);
-      resize: both;
     }
     .chat-header {
       background: #25221E;
