@@ -22,9 +22,9 @@ app.add_middleware(
 )
 
 # DeepSeek 客户端
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+DEEPSEAK_API_KEY = os.environ.get("DEEPSEAK_API_KEY", "")
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url=DEEPSEEK_BASE_URL)
+client = OpenAI(api_key=DEEPSEAK_API_KEY, base_url=DEEPSEEK_BASE_URL)
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -143,14 +143,14 @@ def root():
 
 @app.get("/health")
 def health():
-    if not DEEPSEEK_API_KEY:
-        return {"status": "warning", "message": "DEEPSEEK_API_KEY 未设置"}
+    if not DEEPSEAK_API_KEY:
+        return {"status": "warning", "message": "DEEPSEAK_API_KEY 未设置"}
     return {"status": "ok"}
 
 
 @app.post("/api/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
-    if not DEEPSEEK_API_KEY:
+    if not DEEPSEAK_API_KEY:
         raise HTTPException(status_code=503, detail="API key not configured")
 
     system_prompt = build_system_prompt(req.message)
