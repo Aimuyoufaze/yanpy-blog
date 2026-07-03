@@ -2,7 +2,6 @@
 title: '舆情监测与智能研判 Agent — 课程设计进行时'
 description: '从零搭建一套舆情监测 Agent 系统，覆盖数据采集、情感分析、走势追踪、预警研判全流程。目前项目已进入 Week 2，基础设施搭建完成，MVP 原型就绪。'
 pubDate: 'Jul 3 2026'
-pubDate: 'Jul 3 2026'
 ---
 
 ![舆情监测项目截图](/images/blogtest.jpg)
