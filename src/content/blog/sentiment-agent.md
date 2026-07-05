@@ -33,30 +33,30 @@ pubDate: 'Jul 3 2026'
 
 ## 目前完成的工作（Week 2）
 
-### ✅ 数据采集
+### 数据采集
 
 - **B站爬虫** 已部署，用 asyncpg 直连 PostgreSQL 入库
 - 通用写入函数 `insert_article()` / `insert_articles()` 已封装
 - RSS 订阅模块开发中
 
-### ✅ 数据库
+### 数据库
 
 - 课题组服务器 **PostgreSQL 16** 部署完成
 - `public_sentiment` 库，`articles` 表（字段：id, author, title, content, time, platform, direction, score, keyword, parent_keyword）
 - 支持远程连接（`sentiment_user` 用户）
 
-### ✅ 情感分析与规则引擎
+### 情感分析与规则引擎
 
 - **rule_engine.py** 改造成 LangChain `@tool`，整合情绪/高危/愤怒词典
 - **stage_alert.py** 同样接入 Agent 工具链
 - Agent prompt 已扩展为 6 步流程 + 综合研判
 
-### ✅ 爬虫接入 & 数据导入
+### 爬虫接入 & 数据导入
 
 - 独立 `import_crawled_data.py` 模块，支持增量写入
 - 密码和 API Key 通过 `.env` 管理，不进 Git
 
-### ✅ 课题组服务器
+### 课题组服务器
 
 服务器已到位，基本环境全部配置完成。
 
