@@ -4,7 +4,7 @@ description: '从零搭建一套舆情监测 Agent 系统，覆盖数据采集�
 pubDate: 'Jul 3 2026'
 ---
 
-<img src="/images/blogtest.jpg" alt="舆情监测项目截图" style="border-radius: 12px; box-shadow: 5px 5px 0 #A8D5E2;">
+<img src="/images/blogtest.jpg" alt="舆情监测项目截图" style="border-radius: 12px; border: 2px solid #000; box-shadow: 5px 5px 0 #A8D5E2;">
 
 *项目初期的一些工作记录*
 
