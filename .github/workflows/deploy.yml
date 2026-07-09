@@ -24,12 +24,25 @@ jobs:
       - name: Build Astro
         run: npm run build
 
-      - name: Deploy to VPS via rsync
+      - name: Build blog index
+        run: python3 backend/build_index.py
+
+      - name: Deploy frontend to VPS via rsync
         uses: burnett01/rsync-deployments@7.0.1
         with:
           switches: -avz --delete
           path: dist/
           remote_path: /var/www/yanpy.xyz/
+          remote_host: 199.168.136.16
+          remote_user: root
+          remote_key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Deploy backend to VPS via rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avz --delete
+          path: backend/
+          remote_path: /var/www/yanpy.xyz/backend/
           remote_host: 199.168.136.16
           remote_user: root
           remote_key: ${{ secrets.VPS_SSH_KEY }}
