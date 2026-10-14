@@ -36,8 +36,10 @@ def parse_mdx(filepath):
     # 保留纯文本内容用于搜索
     body_clean = re.sub(r"```[\s\S]*?```", "", body)  # 去掉代码块
     body_clean = re.sub(r"!\[.*?\]\(.*?\)", "", body_clean)  # 去掉图片
+    body_clean = re.sub(r"<img[^>]*>", "", body_clean)  # 去掉 HTML 图片标签
+    body_clean = re.sub(r"<[^>]+>", "", body_clean)  # 去掉其余 HTML 标签
     body_clean = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", body_clean)  # 链接保留文字
-    body_clean = re.sub(r"#{1,6}\s*", "", body_clean)  # 去掉标题标记
+    body_clean = re.sub(r"^#{1,6}\s*", "", body_clean, flags=re.MULTILINE)  # 去掉行首标题标记
     body_clean = re.sub(r"\*\*([^*]+)\*\*", r"\1", body_clean)  # 去掉粗体
     body_clean = re.sub(r"\*([^*]+)\*", r"\1", body_clean)  # 去掉斜体
     body_clean = re.sub(r"^\s*[-*+]\s+", "", body_clean, flags=re.MULTILINE)  # 列表标记
@@ -52,7 +54,7 @@ def parse_mdx(filepath):
         "title": metadata.get("title", slug),
         "description": metadata.get("description", ""),
         "pubDate": metadata.get("pubDate", ""),
-        "body": body_clean[:3000],  # 限制长度，避免超 token
+        "body": body_clean[:8000],  # 限制长度，避免超 token
     }
 
 
