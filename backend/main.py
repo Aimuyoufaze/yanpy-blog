@@ -28,35 +28,56 @@ client = OpenAI(api_key=DEEPSEAK_API_KEY, base_url=DEEPSEEK_BASE_URL)
 
 BASE_DIR = os.path.dirname(__file__)
 
-# ── 加载小右人格 ──
+# ── 人格与博客索引：按需加载，文件一更新就自动生效（发完文章不用重启服务）──
 PUBLIC_MD_PATH = os.path.join(BASE_DIR, "PUBLIC.md")
-if os.path.exists(PUBLIC_MD_PATH):
-    with open(PUBLIC_MD_PATH, "r", encoding="utf-8") as f:
-        xiaoyou_persona = f.read()
-else:
-    xiaoyou_persona = "你叫小右，是 Yan 的 AI 助手。语气温暖直爽。"
-
-# ── 加载博客索引 ──
 BLOG_INDEX_PATH = os.path.join(BASE_DIR, "blog-index.json")
-blog_posts = []
-if os.path.exists(BLOG_INDEX_PATH):
-    with open(BLOG_INDEX_PATH, "r", encoding="utf-8") as f:
-        index = json.load(f)
-        blog_posts = index.get("posts", [])
-    print(f"📚 已加载 {len(blog_posts)} 篇博客文章")
-else:
-    print("⚠️ 未找到 blog-index.json，博客搜索功能不可用")
+
+PERSONA_FALLBACK = "你叫小右，是 Yan 的 AI 助手。语气温暖直爽。"
+
+_cache = {"persona": PERSONA_FALLBACK, "persona_mtime": None, "posts": [], "index_mtime": None}
+
+
+def load_persona() -> str:
+    """读取 PUBLIC.md；文件有变动时自动重新加载"""
+    try:
+        mtime = os.path.getmtime(PUBLIC_MD_PATH)
+    except OSError:
+        _cache["persona"], _cache["persona_mtime"] = PERSONA_FALLBACK, None
+        return _cache["persona"]
+    if _cache["persona_mtime"] != mtime:
+        with open(PUBLIC_MD_PATH, "r", encoding="utf-8") as f:
+            _cache["persona"] = f.read()
+        _cache["persona_mtime"] = mtime
+        print(f"🧠 已加载人格文件 PUBLIC.md（{len(_cache['persona'])} 字）")
+    return _cache["persona"]
+
+
+def load_blog_posts() -> list:
+    """读取 blog-index.json；文件有变动时自动重新加载"""
+    try:
+        mtime = os.path.getmtime(BLOG_INDEX_PATH)
+    except OSError:
+        _cache["posts"], _cache["index_mtime"] = [], None
+        print("⚠️ 未找到 blog-index.json，博客搜索功能不可用")
+        return _cache["posts"]
+    if _cache["index_mtime"] != mtime:
+        with open(BLOG_INDEX_PATH, "r", encoding="utf-8") as f:
+            _cache["posts"] = json.load(f).get("posts", [])
+        _cache["index_mtime"] = mtime
+        print(f"📚 已加载 {len(_cache['posts'])} 篇博客文章")
+    return _cache["posts"]
 
 
 def search_blog(query: str) -> str:
     """简单的关键词匹配，返回最相关的文章摘要"""
-    if not blog_posts:
+    posts = load_blog_posts()
+    if not posts:
         return ""
 
     query_lower = query.lower()
     scored = []
 
-    for post in blog_posts:
+    for post in posts:
         score = 0
         text = (post["title"] + " " + post["description"] + " " + post["body"]).lower()
 
@@ -96,13 +117,14 @@ def search_blog(query: str) -> str:
 
 # ── 构建系统提示 ──
 def build_system_prompt(msg: str) -> str:
+    posts = load_blog_posts()
     blog_context = search_blog(msg)
 
     blog_instruction = ""
-    if blog_posts:
+    if posts:
         blog_instruction = f"""
-博客内容（共 {len(blog_posts)} 篇文章）：
-{chr(10).join(f"  - 【{p['title']}】{p['description']}" for p in blog_posts)}
+博客内容（共 {len(posts)} 篇文章）：
+{chr(10).join(f"  - 【{p['title']}】{p['description']}" for p in posts)}
 
 当访客问到博客相关内容时，你可以根据以上文章列表推荐或回答。
 如果需要更详细的内容，系统会自动搜索相关文章。"""
@@ -114,7 +136,7 @@ def build_system_prompt(msg: str) -> str:
 
 以下是你的完整人格定义，请严格遵守：
 
-{xiaoyou_persona}
+{load_persona()}
 
 额外说明：
 - 你运行在 Yan 的博客 (yanpy.xyz) 上。博客是用 Astro 搭建的
