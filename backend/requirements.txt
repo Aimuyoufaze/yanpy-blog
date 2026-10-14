@@ -1,4 +1,14 @@
+# 小右博客聊天后端依赖
+#
+# 下面这组版本是 2026-10-14 在 VPS（Python 3.9）上实测可用的组合。
+# 注意：openai / httpx / idna 必须一起锁 —— 2026-10-14 就因为 httpx 少了 idna，
+# 重启服务时直接 ModuleNotFoundError 起不来（老进程没重启所以一直没暴露）。
+# 改动后请在服务器上验一遍：
+#   python3 -c "import httpx, openai; print(httpx.__version__, openai.__version__)"
+
 fastapi==0.115.0
 uvicorn[standard]==0.30.0
-openai==1.50.0
+openai==2.44.0
+httpx==0.28.1
+idna==3.20
 pydantic==2.9.0
