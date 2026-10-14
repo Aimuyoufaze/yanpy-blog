@@ -131,14 +131,22 @@
 
       try {
         let reply;
+        let isNotice = false;
         try {
           const res = await fetch(API_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text, history: chatHistory.slice(0, -1) })
           });
-          const data = await res.json();
-          reply = data.reply;
+          if (!res.ok) {
+            // 限速（429）之类的错误：直接把服务端的话转达给访客
+            const data = await res.json().catch(() => ({}));
+            reply = data.detail || '哎呀出错了……稍后再试试？';
+            isNotice = true;
+          } else {
+            const data = await res.json();
+            reply = data.reply;
+          }
         } catch(e) {
           const replies = [
             "嗯哼，这个我得问问 Yan 才行 😅",
@@ -150,7 +158,9 @@
         }
         hideTyping();
         addMessage(reply, false);
-        chatHistory.push({ role: 'assistant', content: reply });
+        if (!isNotice) {
+          chatHistory.push({ role: 'assistant', content: reply });
+        }
       } catch(e) {
         hideTyping();
         addMessage("哎呀出错了……稍后再试试？", false);

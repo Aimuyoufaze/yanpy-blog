@@ -6,7 +6,7 @@
 import os
 import json
 import re
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
@@ -149,6 +149,51 @@ def build_system_prompt(msg: str) -> str:
 {blog_instruction}"""
 
 
+# ── 限速：防止有人恶意高频刷小右（按 IP 的滑动窗口，内存实现，单进程足够用）──
+RATE_LIMIT_PER_MIN = int(os.environ.get("RATE_LIMIT_PER_MIN", "6"))
+RATE_LIMIT_PER_HOUR = int(os.environ.get("RATE_LIMIT_PER_HOUR", "40"))
+_rate_hits: dict = {}
+
+
+def client_ip(request: Request) -> str:
+    """nginx 反代之下，取真实访客 IP"""
+    fwd = request.headers.get("x-forwarded-for", "")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    return request.headers.get("x-real-ip") or (request.client.host if request.client else "unknown")
+
+
+def _prune_rate_hits(now: float) -> None:
+    """丢掉一小时没来过的 IP，避免字典无限膨胀"""
+    for ip in list(_rate_hits.keys()):
+        kept = [t for t in _rate_hits[ip] if t > now - 3600]
+        if kept:
+            _rate_hits[ip] = kept
+        else:
+            del _rate_hits[ip]
+
+
+def check_rate_limit(ip: str):
+    """放行返回 (True, 0)；超限返回 (False, 建议等待秒数)。被拒的请求不产生新额度。"""
+    now = time.time()
+    if len(_rate_hits) > 500:
+        _prune_rate_hits(now)
+
+    hits = [t for t in _rate_hits.get(ip, []) if t > now - 3600]
+    recent = [t for t in hits if t > now - 60]
+
+    if len(recent) >= RATE_LIMIT_PER_MIN:
+        _rate_hits[ip] = hits
+        return False, int(60 - (now - recent[0])) + 1
+    if len(hits) >= RATE_LIMIT_PER_HOUR:
+        _rate_hits[ip] = hits
+        return False, int(3600 - (now - hits[0])) + 1
+
+    hits.append(now)
+    _rate_hits[ip] = hits
+    return True, 0
+
+
 class ChatRequest(BaseModel):
     message: str
     history: list[dict] = []
@@ -171,7 +216,20 @@ def health():
 
 
 @app.post("/api/chat", response_model=ChatResponse)
-def chat(req: ChatRequest):
+def chat(req: ChatRequest, request: Request):
+    ip = client_ip(request)
+    allowed, wait = check_rate_limit(ip)
+    if not allowed:
+        if wait > 60:
+            hint = f"聊得有点多啦～（每小时最多 {RATE_LIMIT_PER_HOUR} 次）大约 {wait // 60 + 1} 分钟后再来 🌬️"
+        else:
+            hint = f"聊得有点快啦，先缓一缓～（每分钟最多 {RATE_LIMIT_PER_MIN} 次）大约 {wait} 秒后再来 🌬️"
+        raise HTTPException(
+            status_code=429,
+            detail=hint,
+            headers={"Retry-After": str(wait)},
+        )
+
     if not DEEPSEAK_API_KEY:
         raise HTTPException(status_code=503, detail="API key not configured")
 
