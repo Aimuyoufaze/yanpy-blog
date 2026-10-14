@@ -108,6 +108,47 @@ p {
 	margin-bottom: 2em;
 }
 
+/* 表格：允许长代码标识符断行，避免把相邻列挤成一行一个字 */
+.prose table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0 0 2em;
+	font-size: 0.95em;
+	line-height: 1.6;
+}
+
+.prose th,
+.prose td {
+	border: 1px solid var(--border);
+	padding: 0.55em 0.8em;
+	text-align: left;
+	vertical-align: top;
+	overflow-wrap: anywhere;
+	word-break: normal;
+}
+
+.prose thead th {
+	background: var(--bg-hover);
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.prose tbody tr:nth-child(even) {
+	background: rgba(0, 0, 0, 0.015);
+}
+
+/* 宽屏下第一列（标签列）不折行；窄屏保留折行以免横向溢出 */
+@media (min-width: 721px) {
+	.prose th:first-child,
+	.prose td:first-child {
+		white-space: nowrap;
+	}
+}
+
+.prose code {
+	overflow-wrap: anywhere;
+}
+
 img {
 	max-width: 100%;
 	height: auto;
